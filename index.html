@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAMEED ULLAH IMAGE TO LINK</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+body{
+    font-family:'Poppins',sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    background:#f0f2f5;
+}
+
+.container{
+    background:#fff;
+    padding:40px;
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    text-align:center;
+    max-width:500px;
+    width:100%;
+}
+
+h1{
+    margin-bottom:20px;
+}
+
+/* CIRCLE BUTTONS */
+.links{
+    margin-bottom:20px;
+    display:flex;
+    justify-content:center;
+    gap:15px;
+}
+
+.links a{
+    width:55px;
+    height:55px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    color:#fff;
+    font-size:22px;
+}
+
+.whatsapp{background:#25D366;}
+.toolkit{background:#111827;}
+
+.upload-area{
+    border:2px dashed #ccc;
+    padding:30px;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+input[type="file"]{display:none;}
+
+#urlOutput{
+    width:100%;
+    margin-top:20px;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #ddd;
+    text-align:center;
+}
+
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:50px;
+    margin-top:10px;
+    cursor:pointer;
+}
+
+.upload-button{background:#4CAF50;color:#fff;}
+.copy-button{background:#555;color:#fff;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>HAMEED ULLAH IMAGE TO LINK</h1>
+
+<div class="links">
+<a href="https://whatsapp.com/channel/0029Vb7v80n72WTshGXMjm2x" target="_blank" class="whatsapp">
+<i class="fab fa-whatsapp"></i>
+</a>
+
+<a href="https://toolkit.page.gd/t/hameedullah" target="_blank" class="toolkit">
+<i class="fas fa-tools"></i>
+</a>
+</div>
+
+<div class="upload-area" onclick="imageUpload.click()">
+Click to Upload Image
+<input type="file" id="imageUpload">
+</div>
+
+<input type="text" id="urlOutput" placeholder="Image link will appear here">
+
+<button class="upload-button" onclick="upload()">Generate Link</button>
+<button class="copy-button" onclick="copy()">Copy Link</button>
+
+</div>
+
+<script>
+async function upload(){
+    let file = document.getElementById("imageUpload").files[0];
+
+    if(!file){
+        alert("Select image first");
+        return;
+    }
+
+    let formData = new FormData();
+    formData.append("file", file);
+
+    try{
+        // 🔥 USING BETTER API (no key issues)
+        let res = await fetch("https://file.io", {
+            method:"POST",
+            body:formData
+        });
+
+        let data = await res.json();
+
+        if(data.success){
+            document.getElementById("urlOutput").value = data.link;
+        }else{
+            alert("Upload failed");
+        }
+
+    }catch(e){
+        alert("Error: " + e.message);
+    }
+}
+
+function copy(){
+    let input = document.getElementById("urlOutput");
+
+    if(!input.value){
+        alert("No link yet");
+        return;
+    }
+
+    input.select();
+    document.execCommand("copy");
+    alert("Copied!");
+}
+</script>
+
+</body>
+</html>
